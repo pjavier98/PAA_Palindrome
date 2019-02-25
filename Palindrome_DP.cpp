@@ -11,14 +11,15 @@ vector<vector<char>> matrix_aux;
 vector<char> build_palindrome() {
     bool flag = false;
     int i, j;
+    i = 0;
+    j = aux.size() - 1;
     vector<char> palindrome;
     vector<char>::iterator it;
+
     for (int k = 0; k < aux.size(); k++) {
         palindrome.push_back(aux[k]);
     }
-    i = 0;
-    j = aux.size() - 1;
-    while (i <= j) {
+    while (i < j) {
         flag = false;
         if (palindrome[i] != palindrome[j]) {
             for (int k = 1; i != (j - k); k++) {//Percorre o vector até verificar as posições i + 1 e j - 1
