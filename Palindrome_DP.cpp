@@ -8,6 +8,9 @@ string word, reverse_word, aux;
 vector <vector<lli>> matrix;
 vector<vector<char>> matrix_aux;
 
+
+// fazer funcao para reaproveitar codigo da build_palindrome;
+
 vector<char> build_palindrome() {
     bool flag = false;
     int i, j;
@@ -22,34 +25,33 @@ vector<char> build_palindrome() {
     while (i < j) {
         flag = false;
         if (palindrome[i] != palindrome[j]) {
-            for (int k = 1; i != (j - k); k++) {//Percorre o vector até verificar as posições i + 1 e j - 1
+            for (int k = 1; i != (j - k); k++) { // It traverses the vector until it verifies the positions i + 1 and j - 1
                 if (palindrome[i + k] == palindrome[j]) {  // Insert Right
-                    it = palindrome.begin();//Inicia o it no início do vector
-                    advance(it, j + 1);//Move o it para a posição j + 1 do palindromo
-                    palindrome.insert(it, palindrome[i]);//Insere "palindrome[i]" antes da posição j + 1
+                    it = palindrome.begin(); // Start the iterator at the beginning of the vector
+                    advance(it, j + 1); // Move iterator to palindrome position j + 1
+                    palindrome.insert(it, palindrome[i]); // Insert "palindrome [i]" before position j + 1
                     i += 1;
                     flag = true;
                     break;
                 } else if (palindrome[j - k] == palindrome[i]) {  // Insert Left
-                    it = palindrome.begin();// Inicia o it no início do vector
-                    advance(it, i);//Move o it para a posição i do palindromo
-                    palindrome.insert(it, palindrome[j]);// Insere "palindrome[j]" antes da posição i
+                    it = palindrome.begin(); // Start the iterator at the beginning of the vector
+                    advance(it, i); // Move iterator to palindrome position i
+                    palindrome.insert(it, palindrome[j]); // Insert "palindrome [j]" before position i
                     i += 1;
                     flag = true;
                     break;
                 }
             }
             if (flag == false) {
-                if(i == j - 1) {
-                    //Insert Right
-                    it = palindrome.begin();//Inicia o it no início do vector
-                    advance(it, j + 1);// Move o it para a posição j + 1 do palindromo
-                    palindrome.insert(it, palindrome[i]);// Insere "palindrome[i]" antes da posição j+1
+                if(i == j - 1) { // Insert Right
+                    it = palindrome.begin(); // Start the iterator at the beginning of the vector
+                    advance(it, j + 1); // Move iterator to palindrome position j + 1
+                    palindrome.insert(it, palindrome[i]); // Insert "palindrome [i]" before position j + 1
                     i += 1;
-                } else {
+                } else { 
                     //Insert Right
-                    it = palindrome.begin();//Inicia o it no início do vector
-                    advance(it, j + 1);// Move o it para a posição j + 1 do palindromo
+                    it = palindrome.begin(); // Start the iterator at the beginning of the vector
+                    advance(it, j + 1); // Move o it para a posição j + 1 do palindromo
                     palindrome.insert(it, palindrome[i]);// Insere "palindrome[i]" antes da posição j+1
                     // Insert Left
                     it = palindrome.begin();//Inicia o it no início do vector
@@ -112,11 +114,11 @@ int main() {
     reverse(reverse_word.begin(), reverse_word.end());
     word = "#" + word;
     reverse_word = "#" + reverse_word;
-    matrix.resize(size+1);
-    matrix_aux.resize(size+1);
+    matrix.resize(size + 1);
+    matrix_aux.resize(size + 1);
     for (int i = 0; i < size + 1; i++) {
-        matrix[i].resize(size+1, -1);
-        matrix_aux[i].resize(size+1,'#');
+        matrix[i].resize(size + 1, -1);
+        matrix_aux[i].resize(size + 1,'#');
     }
     
     LCS(size, size);
