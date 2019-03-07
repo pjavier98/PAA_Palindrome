@@ -5,20 +5,25 @@ using namespace std;
 typedef long long int lli;
 
 string word, reverse_word, aux;
-vector <vector<lli>> matrix;
-vector<vector<char>> matrix_aux;
+vector< vector<lli> > matrix;
+vector< vector<char> > matrix_aux;
+vector< char > palindrome;
 
 
-// fazer funcao para reaproveitar codigo da build_palindrome;
+vector<char> insert_letter(int a, char letter) {
+    vector<char>::iterator it;
+    it = palindrome.begin(); // Start the iterator at the beginning of the vector
+    advance(it, a); // Move iterator to palindrome position a
+    palindrome.insert(it, letter); // Insert "letter" before position a
+    return palindrome;
+}
 
 vector<char> build_palindrome() {
     bool flag = false;
     int i, j;
     i = 0;
     j = aux.size() - 1;
-    vector<char> palindrome;
-    vector<char>::iterator it;
-
+    
     for (int k = 0; k < aux.size(); k++) {
         palindrome.push_back(aux[k]);
     }
@@ -27,16 +32,12 @@ vector<char> build_palindrome() {
         if (palindrome[i] != palindrome[j]) {
             for (int k = 1; i != (j - k); k++) { // It traverses the vector until it verifies the positions i + 1 and j - 1
                 if (palindrome[i + k] == palindrome[j]) {  // Insert Right
-                    it = palindrome.begin(); // Start the iterator at the beginning of the vector
-                    advance(it, j + 1); // Move iterator to palindrome position j + 1
-                    palindrome.insert(it, palindrome[i]); // Insert "palindrome [i]" before position j + 1
+                    palindrome = insert_letter(j + 1, palindrome[i]);
                     i += 1;
                     flag = true;
                     break;
                 } else if (palindrome[j - k] == palindrome[i]) {  // Insert Left
-                    it = palindrome.begin(); // Start the iterator at the beginning of the vector
-                    advance(it, i); // Move iterator to palindrome position i
-                    palindrome.insert(it, palindrome[j]); // Insert "palindrome [j]" before position i
+                    palindrome = insert_letter(i, palindrome[j]);
                     i += 1;
                     flag = true;
                     break;
@@ -44,19 +45,13 @@ vector<char> build_palindrome() {
             }
             if (flag == false) {
                 if(i == j - 1) { // Insert Right
-                    it = palindrome.begin(); // Start the iterator at the beginning of the vector
-                    advance(it, j + 1); // Move iterator to palindrome position j + 1
-                    palindrome.insert(it, palindrome[i]); // Insert "palindrome [i]" before position j + 1
+                    palindrome = insert_letter(j + 1, palindrome[i]);
                     i += 1;
                 } else { 
                     //Insert Right
-                    it = palindrome.begin(); // Start the iterator at the beginning of the vector
-                    advance(it, j + 1); // Move o it para a posição j + 1 do palindromo
-                    palindrome.insert(it, palindrome[i]);// Insere "palindrome[i]" antes da posição j+1
+                    palindrome = insert_letter(j + 1, palindrome[i]);
                     // Insert Left
-                    it = palindrome.begin();//Inicia o it no início do vector
-                    advance(it, i + 1);// Move o it para a posição i + 1 do palindromo
-                    palindrome.insert(it, palindrome[j]);// Insere "palindrome[j]" antes da posição i+1
+                    palindrome = insert_letter(i + 1, palindrome[j]);
                     i += 2;
                 }
             }
