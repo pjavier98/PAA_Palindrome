@@ -127,6 +127,5 @@ int main() {
         cout << palindrome[k];
     }
     cout << endl;
-    cout << palindrome.size() << " - " << size << " = " << minimum << endl;
     return 0;
 }
