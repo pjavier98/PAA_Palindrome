@@ -14,7 +14,7 @@ vector <char> insert_space(vector<char> palindrome, int a) {
     vector<char>::iterator it;
     it = palindrome.begin(); // Start the iterator at the beginning of the vector
     advance(it, a); // Move iterator to palindrome position a
-    palindrome.insert(it, ' '); // Insert "letter" before position a
+    palindrome.insert(it, ' '); // Insert "space" before position a
     return palindrome;
 }
 
