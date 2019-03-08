@@ -4,17 +4,30 @@ using namespace std;
 
 typedef long long int lli;
 
-string word, reverse_word, aux;
-vector< vector<lli> > matrix;
-vector< vector<char> > matrix_aux;
+string phrase, reverse_phrase, aux;
+vector< vector < lli > > matrix;
+vector< vector < char > > matrix_aux;
 vector< char > palindrome;
+vector< lli > spaces;
 
+vector <char> insert_space(vector<char> palindrome, int a) {
+    vector<char>::iterator it;
+    it = palindrome.begin(); // Start the iterator at the beginning of the vector
+    advance(it, a); // Move iterator to palindrome position a
+    palindrome.insert(it, ' '); // Insert "letter" before position a
+    return palindrome;
+}
 
 vector<char> insert_letter(int a, char letter) {
     vector<char>::iterator it;
     it = palindrome.begin(); // Start the iterator at the beginning of the vector
     advance(it, a); // Move iterator to palindrome position a
     palindrome.insert(it, letter); // Insert "letter" before position a
+    for(int i = 0; i < spaces.size(); i++) {
+        if(spaces[i] >= a) {
+            spaces[i] += 1;
+        }
+    }
     return palindrome;
 }
 
@@ -72,7 +85,7 @@ lli LCS(int i, int j) {
         if it arrived there will be nothing more in common */
     if (i == 0 or j == 0) {
         return 0;
-    } else if (word[i] == reverse_word[j]) {
+    } else if (phrase[i] == reverse_phrase[j]) {
         /*  If one letter equals another, it means that it should
             be present in our greater subsequence group, as soon as
             we include this letter in the solution */
@@ -102,13 +115,21 @@ lli LCS(int i, int j) {
 int main() {
     cout << "Insert a string: ";
     int size;
-    cin >> word;
-    aux = word;
-    size = word.size();
-    reverse_word = word;
-    reverse(reverse_word.begin(), reverse_word.end());
-    word = "#" + word;
-    reverse_word = "#" + reverse_word;
+    string phrase_aux;
+    getline(cin, phrase_aux);
+    for(int i = 0; i < phrase_aux.size(); i++) {
+        if(phrase_aux[i] != ' ') {
+            phrase.push_back(phrase_aux[i]);
+        } else {
+            spaces.push_back(i);
+        }
+    }
+    aux = phrase;
+    size = phrase.size();
+    reverse_phrase = phrase;
+    reverse(reverse_phrase.begin(), reverse_phrase.end());
+    phrase = "#" + phrase;
+    reverse_phrase = "#" + reverse_phrase;
     matrix.resize(size + 1);
     matrix_aux.resize(size + 1);
     for (int i = 0; i < size + 1; i++) {
@@ -120,6 +141,9 @@ int main() {
     lli minimum = size - matrix[size][size];
     // The result is the size of the string - size of the largest subsequence
     vector<char> palindrome = build_palindrome();
+    for(int i = 0; i < spaces.size(); i++) {
+        palindrome = insert_space(palindrome, spaces[i]);
+    }
     cout << "Minimum number of characters to be inserted: " << minimum << endl;
 
     cout << "Palindrome: ";
